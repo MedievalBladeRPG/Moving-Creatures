@@ -23,7 +23,8 @@ public class Events implements Listener {
 			Player p = event.getPlayer();
 			FloatingBlock b = new FloatingBlock(p.getEyeLocation(), new ItemStack(Material.STONE, (short) 2));
 			plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-				b.setVelocity(p.getLocation().getDirection().normalize());
+				b.move(p.getLocation().getDirection().normalize().multiply(0.1));
+				b.setYaw((float) Math.random() * 200.0F);
 			}, 0, 2);
 		}
 	}
