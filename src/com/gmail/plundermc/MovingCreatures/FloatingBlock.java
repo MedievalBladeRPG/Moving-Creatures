@@ -10,7 +10,7 @@ import net.minecraft.server.v1_8_R3.EntityFallingBlock;
 
 public class FloatingBlock {
 
-	private FloatingCart cart;
+	private FloatingBoat boat;
 	private EntityFallingBlock block;
 
 	@SuppressWarnings("deprecation")
@@ -18,32 +18,30 @@ public class FloatingBlock {
 		FallingBlock fb = l.getWorld().spawnFallingBlock(l, item.getType(), item.getData().getData());
 		EntityFallingBlock efb = ((CraftFallingSand) fb).getHandle();
 		efb.ticksLived = Integer.MIN_VALUE;
-		FloatingCart cart = new FloatingCart(l);
-		cart.passenger = efb;
-		efb.vehicle = cart;
-		cart.setFlyingVelocityMod(new Vector());
-		cart.setDerailedVelocityMod(new Vector());
-		this.cart = cart;
+		FloatingBoat boat = new FloatingBoat(l);
+		boat.passenger = efb;
+		efb.vehicle = boat;
+		this.boat = boat;
 		this.block = efb;
 	}
 
 	public boolean isAlive() {
-		return this.cart.isAlive() && this.block.isAlive();
+		return this.boat.isAlive() && this.block.isAlive();
 	}
 
 	public void setVelocity(Vector v) {
-		this.cart.getBukkitEntity().setVelocity(v);
+		this.boat.getBukkitEntity().setVelocity(v);
 	}
 
 	public void teleport(Location l) {
-		this.cart.setLocation(l.getX(), l.getY(), l.getZ(), 0, 0);
+		this.boat.setLocation(l.getX(), l.getY(), l.getZ(), 0, 0);
 	}
 
 	public EntityFallingBlock getBlock() {
 		return block;
 	}
 
-	public FloatingCart getCart() {
-		return this.cart;
+	public FloatingBoat getboat() {
+		return this.boat;
 	}
 }
