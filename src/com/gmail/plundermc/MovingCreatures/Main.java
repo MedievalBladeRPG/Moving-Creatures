@@ -2,16 +2,22 @@ package com.gmail.plundermc.MovingCreatures;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 public class Main extends JavaPlugin implements Listener {
+
+	private Commands command;
 
 	@Override
 	public void onEnable() {
 		clearOwnedEntities();
 		new Events(this);
+		command = new Commands(this);
 	}
 
 	@Override
@@ -21,8 +27,11 @@ public class Main extends JavaPlugin implements Listener {
 	public void clearOwnedEntities() {
 		for (World w : getServer().getWorlds())
 			for (Entity e : w.getEntities())
-				if (e.hasMetadata("movingcreature"))
+				if (e.hasMetadata("movingcreature")) {
+					if (e.getPassenger() != null)
+						e.getPassenger().remove();
 					e.remove();
+				}
 	}
 
 	public static void rotate(Location l, Location pivot, double a, double b, double c) {
@@ -67,5 +76,14 @@ public class Main extends JavaPlugin implements Listener {
 			l.setY(y * cc - x * sc + pivot.getY());
 		} else {
 		}
+	}
+
+	public static void rotate(Location l, Location p, Vector r) {
+		Main.rotate(l, p, r.getX(), r.getY(), r.getZ());
+	}
+
+	@Override
+	public boolean onCommand(CommandSender a1, Command a2, String a3, String[] a4) {
+		return command.onCommand(a1, a2, a3, a4);
 	}
 }

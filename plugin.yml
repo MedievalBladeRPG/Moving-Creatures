@@ -1,3 +1,7 @@
 name: MovingCreatures
 main: com.gmail.plundermc.MovingCreatures.Main
 version: 1.0b
+depend: [Holograms]
+commands:
+  sampleschematic:
+    usage: die
